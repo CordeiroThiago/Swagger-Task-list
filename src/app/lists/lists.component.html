@@ -1,0 +1,12 @@
+<h1 class="title">{{title}}</h1>
+
+<div class="list-group">
+    <a
+        *ngFor="let list of lists"
+        href="#"
+        class="list-group-item list-group-item-action"
+        [routerLink]="'/lists/' + list.id + '/tasks'"
+    >
+        {{list.name}}
+    </a>
+</div>
