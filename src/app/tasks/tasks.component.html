@@ -1,1 +1,24 @@
-<p>tasks works!</p>
+<h1 class="title">{{title}}</h1>
+
+<div *ngIf="tasks" class="list">
+    <div class="item"
+        *ngFor="let task of tasks"
+    >
+        <a [ngSwitch]="task.status" (click)="toggleFinished(task)">
+            <i *ngSwitchCase="'finished'"
+                class="fas fa-check-square fa-lg checked"
+            ></i>
+            <i *ngSwitchDefault
+                class="far fa-square fa-lg"
+            ></i>
+        </a>
+
+        <a>{{task.name}}</a>
+
+        <a>
+            <i
+                class="fas fa-chevron-down fa-lg"
+            ></i>
+        </a>
+    </div>
+</div>

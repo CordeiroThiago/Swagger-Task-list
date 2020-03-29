@@ -1,3 +1,4 @@
+import { ListsService } from './../lists.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,21 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lists.component.scss']
 })
 export class ListsComponent implements OnInit {
-  title="Minhas listas"
-  lists: Object[] = [
-    {
-      name: "bla",
-      id:1
-    },
-    {
-      name: "bl3",
-      id:2
-    }
-  ]
+  title="Minhas listas";
+  lists: Object[]; 
 
-  constructor() { }
+  constructor(private _listsService: ListsService) { }
 
   ngOnInit(): void {
+    this.lists = this._listsService.getLists();
   }
-
 }

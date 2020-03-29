@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { ListsComponent } from './lists/lists.component';
+import { NewItemComponent } from './new-item/new-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     TasksComponent,
-    ListsComponent
+    ListsComponent,
+    NewItemComponent
   ],
   imports: [
     BrowserModule,

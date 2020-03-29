@@ -1,6 +1,6 @@
 <h1 class="title">{{title}}</h1>
 
-<div class="list-group">
+<div *ngIf="lists" class="list-group">
     <a
         *ngFor="let list of lists"
         href="#"
