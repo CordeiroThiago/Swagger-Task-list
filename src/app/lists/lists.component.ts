@@ -1,5 +1,5 @@
 import { ListModalComponent } from './../list-modal/list-modal.component';
-import { ListsService } from './../lists.service';
+import { ListsService } from '../services/lists.service';
 import { Component, OnInit } from '@angular/core';
 import { List } from '../classes/list';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

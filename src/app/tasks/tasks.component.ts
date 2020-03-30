@@ -1,5 +1,5 @@
 import { TaskModalComponent } from './../task-modal/task-modal.component';
-import { TasksService } from './../tasks.service';
+import { TasksService } from '../services/tasks.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs';

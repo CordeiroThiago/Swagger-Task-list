@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { List } from './classes/list';
+
+const auth = require('../assets/auth.json');
 
 @Injectable({
   providedIn: 'root'
 })
-export class ListsService {
+export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  getLists(): List[] {
-
+  login() {
+    const url = `https://api-fluig.staging.totvs.app/accounts/oauth/token?grant_type=password&response_type=token&client_id=demo&username=${auth.username}&password=${auth.password}`;
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': 'Basic '
+        'Authorization': auth.authorization
       })
     };
-    const url = 'http://';
     
     this.http.post(url, {}, httpOptions).toPromise()
     .then(
@@ -24,16 +24,5 @@ export class ListsService {
         console.log(data);
       }
     )
-    this.http.get(url, httpOptions).toPromise()
-    .then(
-      (data:any) => {
-        console.log(data);
-      }
-    )
-
-    return [
-      new List(1, "Exercícios"),
-      new List(2, "Trabalho")
-    ]
   }
 }
