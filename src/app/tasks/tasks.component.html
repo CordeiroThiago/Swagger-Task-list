@@ -4,21 +4,29 @@
     <div class="item"
         *ngFor="let task of tasks"
     >
-        <a [ngSwitch]="task.status" (click)="toggleFinished(task)">
-            <i *ngSwitchCase="'finished'"
-                class="fas fa-check-square fa-lg checked"
-            ></i>
-            <i *ngSwitchDefault
-                class="far fa-square fa-lg"
-            ></i>
-        </a>
+        <div class="item-header">
+            <a [ngSwitch]="task.status" (click)="toggleFinished(task)">
+                <i *ngSwitchCase="'finished'"
+                    class="fas fa-check-square fa-lg checked"
+                ></i>
+                <i *ngSwitchDefault
+                    class="far fa-square fa-lg"
+                ></i>
+            </a>
 
-        <a>{{task.name}}</a>
+            <a (click)="openDetails(task)">
+                {{task.name}}
+            </a>
 
-        <a>
-            <i
-                class="fas fa-chevron-down fa-lg"
-            ></i>
-        </a>
+            <a class="clicable" (click)="deleteTask(task.id)">
+                <i class="fas fa-trash fa-lg"></i>
+            </a>
+        </div>
+
+        <div class="item-body" *ngIf="task.showDetails">
+            Description: {{task.description}}
+        </div>
     </div>
 </div>
+
+<new-item [click]="newTask">Adicionar Tarefa</new-item>

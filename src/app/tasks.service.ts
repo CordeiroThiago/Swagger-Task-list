@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Task } from './classes/task';
 
 @Injectable({
   providedIn: 'root'
@@ -7,36 +8,28 @@ export class TasksService {
 
   constructor() { }
 
-  getTasks(listID: number): Object[] {
+  getTasks(listID: number): Task[] {
     return (listID == 1) ? 
     [
-      {
-        id: 1,
-        name: "Flexões",
-        description: "Fazer 50 flexões",
-        status: "open"
-      },
-      {
-        id: 2,
-        name: "Abdominais",
-        description: "Fazer 30 abdominais",
-        status: "open"
-      }
+      new Task(1, "Flexões", "Fazer 50 flexões", "open"),
+      new Task(2, "Abdominais", "Fazer 30 abdominais", "open")
     ]
     :
     [
-      {
-        id: 1,
-        name: "Reunião LGPDP",
-        description: "Reunião LGPDP 05/05/2020 15:00",
-        status: "open"
-      },
-      {
-        id: 2,
-        name: "Entrevista",
-        description: "Realizar entrevista de funcionário.",
-        status: "finished"
-      }
+      new Task(1, "Reunião LGPDP", "Reunião LGPDP 05/05/2020 15:00", "open"),
+      new Task(2, "Entrevista", "Realizar entrevista de funcionário", "finished")
     ]
+  }
+
+  createTask(task: Task): void {
+    console.log(`Task ${task.name} criada`);
+  }
+
+  updateTask(task: Task): void {
+    console.log("Task alterada");
+  }
+
+  deleteTask(taskId: number): void {
+    console.log(`Task ${taskId} deletada`);
   }
 }

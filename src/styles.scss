@@ -1,6 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
+$red: #dc3545;
+
 h1.title {
     margin: 10px 0 20px;
+}
+
+.alert.alert-danger.feedback {
+    color: $red;
+    background-color: inherit;
+    border: 0;
+    padding: 0 0 0 20px;
+    font-size: 0.9em;
 }

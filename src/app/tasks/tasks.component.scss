@@ -8,48 +8,54 @@ div.list {
     align-items: stretch;
 
     .item {
-        display: flex;
-        font-size: 1.5em;
         margin: 5px 0;
-        background-color: $itemColor;
-        border-radius: 15px;
 
-        a {
-            padding: 10px;
-            align-items: center;
+        .item-header{
+            display: flex;
+            font-size: 1.5em;
+            background-color: $itemColor;
 
-            i {
-                margin: 0 5px;
+            a {
+                padding: 10px;
+                align-items: center;
+
+                i {
+                    margin: 0 5px;
+                }
+            }
+
+            a:hover {
+                cursor: pointer;
+            }
+
+            a:nth-child(2) {
+                width: 100%;
+                color: $linkColor;
+            }
+
+            a:nth-child(2):hover {
+                text-decoration: underline;
+            }
+
+            a:first-child {
+                background-color: transparent;
+            }
+
+            a:last-child {
+                background-color: transparent;
             }
         }
-        a:hover {
-            cursor: pointer;
-        }
-        a:nth-child(2) {
-            width: 100%;
-            color: $linkColor;
-        }
-        a:nth-child(2):hover {
-            text-decoration: underline;
-        }
-        a:first-child {
-            background-color: transparent;
-        }
-        a:last-child {
-            background-color: transparent;
-        }
-        a:last-child:hover {
-            border-top-right-radius: 15px;
-            border-bottom-right-radius: 15px;
-            background-color: darken($itemColor, 20%);
-        }
-    }
 
-    .item:hover {
-        background-color: darken($itemColor, 10%);
+        .item-header:hover {
+            background-color: darken($itemColor, 10%);
+        }
     }
 }
 
 .checked {
     color: $checkedColor;
+}
+
+.clicable:hover {
+    background-color: darken($itemColor, 20%) !important;
 }

@@ -8,6 +8,10 @@ import { HomeComponent } from './home/home.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { ListsComponent } from './lists/lists.component';
 import { NewItemComponent } from './new-item/new-item.component';
+import { TaskModalComponent } from './task-modal/task-modal.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ListModalComponent } from './list-modal/list-modal.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +19,16 @@ import { NewItemComponent } from './new-item/new-item.component';
     HomeComponent,
     TasksComponent,
     ListsComponent,
-    NewItemComponent
+    NewItemComponent,
+    TaskModalComponent,
+    ListModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
