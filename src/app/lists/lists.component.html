@@ -1,14 +1,32 @@
 <h1 class="title">{{title}}</h1>
 
-<div *ngIf="lists" class="list-group">
-    <a
+<div *ngIf="lists" class="list">
+    <div class="item"
         *ngFor="let list of lists"
-        href="#"
-        class="list-group-item list-group-item-action"
-        [routerLink]="'/lists/' + list.id + '/tasks'"
     >
-        {{list.name}}
-    </a>
+        <div class="item-header">
+            <a class="clicable" (click)="openDetails(list)">
+                <i class="fas fa-edit fa-lg"></i>
+            </a>
+
+            <a class="link" [routerLink]="'/lists/' + list.id + '/tasks'">
+                {{list.name}}
+            </a>
+            
+            <ng-template [ngIf]="list.active" [ngIfElse]="disabled">
+                <a class="clicable" (click)="disableList(list.id)">
+                    <i class="fas fa-minus-circle disable fa-lg"></i>
+                </a>
+            </ng-template>
+            
+            <ng-template #disabled>
+                <a class="clicable" (click)="enableList(list.id)">
+                    <i class="fas fa-recycle enable fa-lg"></i>
+                </a>
+            </ng-template>
+            
+        </div>
+    </div>
 </div>
 
 <new-item [click]="newList">Adicionar Lista</new-item>

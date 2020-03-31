@@ -11,13 +11,13 @@ export class TasksService {
   getTasks(listID: number): Task[] {
     return (listID == 1) ? 
     [
-      new Task(1, "Flexões", "Fazer 50 flexões", "open"),
-      new Task(2, "Abdominais", "Fazer 30 abdominais", "open")
+      new Task("1", "Flexões", "Fazer 50 flexões", "open"),
+      new Task("2", "Abdominais", "Fazer 30 abdominais", "open")
     ]
     :
     [
-      new Task(1, "Reunião LGPDP", "Reunião LGPDP 05/05/2020 15:00", "open"),
-      new Task(2, "Entrevista", "Realizar entrevista de funcionário", "finished")
+      new Task("1", "Reunião LGPDP", "Reunião LGPDP 05/05/2020 15:00", "open"),
+      new Task("2", "Entrevista", "Realizar entrevista de funcionário", "finished")
     ]
   }
 
@@ -29,7 +29,7 @@ export class TasksService {
     console.log("Task alterada");
   }
 
-  deleteTask(taskId: number): void {
+  deleteTask(taskId: string): void {
     console.log(`Task ${taskId} deletada`);
   }
 }

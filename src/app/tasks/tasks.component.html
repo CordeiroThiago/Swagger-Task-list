@@ -14,17 +14,13 @@
                 ></i>
             </a>
 
-            <a (click)="openDetails(task)">
+            <a class="link" (click)="openDetails(task)">
                 {{task.name}}
             </a>
 
             <a class="clicable" (click)="deleteTask(task.id)">
                 <i class="fas fa-trash fa-lg"></i>
             </a>
-        </div>
-
-        <div class="item-body" *ngIf="task.showDetails">
-            Description: {{task.description}}
         </div>
     </div>
 </div>

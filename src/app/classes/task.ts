@@ -1,5 +1,5 @@
 export class Task {
-    constructor(private _id: number = 0,
+    constructor(private _id: string = "",
         private _name: string = "",
         private _description: string = "",
         private _status: string = "open") {}
@@ -20,7 +20,7 @@ export class Task {
         return this._status
     }
 
-    set id(id: number) {
+    set id(id: string) {
         this._id = id;
     }
 

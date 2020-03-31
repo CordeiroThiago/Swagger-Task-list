@@ -15,7 +15,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   title = "Tarefas"
   private routeSub: Subscription;
   listId: number;
-  tasks: Task[];
+  tasks: Task[] = [];
   selectedTask: Task;
 
   constructor(private route: ActivatedRoute,
@@ -64,7 +64,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this._tasksService.updateTask(task);
   }
 
-  deleteTask(taskId: number): void {
+  deleteTask(taskId: string): void {
     this._tasksService.deleteTask(taskId);
   }
 }

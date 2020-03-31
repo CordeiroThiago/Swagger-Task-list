@@ -11,14 +11,41 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListsComponent implements OnInit {
   title="Minhas listas";
-  lists: List[]; 
+  lists: List[] = []; 
 
-  constructor(private _listsService: ListsService, private modalService: NgbModal) { }
+  constructor(private _listsService: ListsService, private modalService: NgbModal) {
+    this.getLists = this.getLists.bind(this);
+    this.saveChanges = this.saveChanges.bind(this);
+    this.disableList = this.disableList.bind(this);
+    this.enableList = this.enableList.bind(this);
+    this.createList = this.createList.bind(this);
+    this.newList = this.newList.bind(this);
+  }
 
   ngOnInit(): void {
-    this._listsService.getLists().subscribe(
+    this.getLists();
+  }
+
+  getLists(showDisabled = false) {
+    this.lists = [];
+    this._listsService.getLists(showDisabled).subscribe(
       res => {
-        console.log(res)
+        res.items.forEach(list => {
+          this.lists.push(
+            new List(
+              list.id,
+              list.name,
+              list.description,
+              list.active,
+              list.archived,
+              new Date(list.createDate),
+              new Date(list.updateDate),
+              list.sortValue,
+              list.authorId,
+              list.tenantId
+            )
+          );
+        });
       },
       err => {
         console.log(err)
@@ -31,7 +58,61 @@ export class ListsComponent implements OnInit {
     taskModal.save = this.createList;
   }
 
-  createList(list: List): void {
+  openDetails(list: List): void {
+    const taskModal = this.modalService.open(ListModalComponent).componentInstance;
+    taskModal.list = list;
+    taskModal.save = this.saveChanges;
+  }
 
+  createList(list: List): void {
+    this._listsService.createList(list).subscribe(
+      list => {
+        this.lists.push(
+          new List(
+            list.id,
+            list.name,
+            list.description,
+            list.active,
+            list.archived,
+            new Date(list.createDate),
+            new Date(list.updateDate),
+            list.sortValue,
+            list.authorId,
+            list.tenantId
+          )
+        );
+      },
+      err => {
+        console.log(err)
+      }
+    )
+  }
+
+  saveChanges(list: List): void {
+    this._listsService.updateList(list);
+  }
+
+  disableList(listId: string): void {
+    this._listsService.disableList(listId).subscribe(
+      res => {
+        this.getLists();
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  enableList(listId: string): void {
+    this._listsService.enableList(listId).subscribe(
+      res => {
+        this.getLists();
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    )
   }
 }

@@ -14,3 +14,77 @@ h1.title {
     padding: 0 0 0 20px;
     font-size: 0.9em;
 }
+
+// Item List
+$itemColor: #ececec;
+$checkedColor: #06a506;
+$linkColor: #0024a7;
+
+div.list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .item {
+        margin: 5px 0;
+
+        .item-header{
+            display: flex;
+            font-size: 1.5em;
+            background-color: $itemColor;
+
+            a {
+                padding: 10px;
+                align-items: center;
+
+                i {
+                    margin: 0 5px;
+                }
+            }
+
+            a:hover {
+                cursor: pointer;
+            }
+
+            a.link {
+                width: 100%;
+                color: $linkColor;
+            }
+
+            a.link:hover {
+                text-decoration: underline;
+            }
+
+            a:first-child {
+                background-color: transparent;
+            }
+
+            a:last-child {
+                background-color: transparent;
+            }
+    
+            .checked {
+                color: $checkedColor;
+            }
+
+            .clicable:hover {
+                background-color: darken($itemColor, 20%);
+            }
+        }
+
+        .item-header:hover {
+            background-color: darken($itemColor, 10%);
+        }
+    }
+}
+// Item List
+
+$disableColor: #de0000;
+
+.fas.disable {
+    color: $disableColor;
+}
+
+.fas.enable {
+    color: $checkedColor;
+}
