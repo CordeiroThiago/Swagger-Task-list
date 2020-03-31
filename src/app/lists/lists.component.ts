@@ -16,7 +16,14 @@ export class ListsComponent implements OnInit {
   constructor(private _listsService: ListsService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.lists = this._listsService.getLists();
+    this._listsService.getLists().subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 
   newList(): void {
