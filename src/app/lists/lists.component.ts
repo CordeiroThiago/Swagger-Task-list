@@ -11,13 +11,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListsComponent implements OnInit {
   title="Minhas listas";
-  lists: List[] = []; 
+  lists: List[] = [];
+  loading = false;
 
   constructor(private _listsService: ListsService, private modalService: NgbModal) {
     this.getLists = this.getLists.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
-    this.disableList = this.disableList.bind(this);
-    this.enableList = this.enableList.bind(this);
+    this.archiveList = this.archiveList.bind(this);
+    this.unarchiveList = this.unarchiveList.bind(this);
     this.createList = this.createList.bind(this);
     this.newList = this.newList.bind(this);
   }
@@ -26,9 +27,11 @@ export class ListsComponent implements OnInit {
     this.getLists();
   }
 
-  getLists(showDisabled = false) {
+  getLists() {
+    this.loading = true;
     this.lists = [];
-    this._listsService.getLists(showDisabled).subscribe(
+
+    this._listsService.getLists().subscribe(
       res => {
         res.items.forEach(list => {
           this.lists.push(
@@ -46,6 +49,8 @@ export class ListsComponent implements OnInit {
             )
           );
         });
+
+        this.loading = false;
       },
       err => {
         console.log(err)
@@ -89,14 +94,10 @@ export class ListsComponent implements OnInit {
   }
 
   saveChanges(list: List): void {
-    this._listsService.updateList(list);
-  }
-
-  disableList(listId: string): void {
-    this._listsService.disableList(listId).subscribe(
+    this.loading = true;
+    this._listsService.updateList(list).subscribe(
       res => {
         this.getLists();
-        console.log(res);
       },
       err => {
         console.log(err);
@@ -104,11 +105,23 @@ export class ListsComponent implements OnInit {
     )
   }
 
-  enableList(listId: string): void {
-    this._listsService.enableList(listId).subscribe(
+  archiveList(listId: string): void {
+    this.loading = true;
+    this._listsService.archiveList(listId).subscribe(
       res => {
         this.getLists();
-        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
+  unarchiveList(listId: string): void {
+    this.loading = true;
+    this._listsService.unarchiveList(listId).subscribe(
+      res => {
+        this.getLists();
       },
       err => {
         console.log(err);

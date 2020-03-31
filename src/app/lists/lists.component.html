@@ -13,14 +13,14 @@
                 {{list.name}}
             </a>
             
-            <ng-template [ngIf]="list.active" [ngIfElse]="disabled">
-                <a class="clicable" (click)="disableList(list.id)">
+            <ng-template [ngIf]="!list.archived" [ngIfElse]="disabled">
+                <a class="clicable" (click)="archiveList(list.id)">
                     <i class="fas fa-minus-circle disable fa-lg"></i>
                 </a>
             </ng-template>
             
             <ng-template #disabled>
-                <a class="clicable" (click)="enableList(list.id)">
+                <a class="clicable" (click)="unarchiveList(list.id)">
                     <i class="fas fa-recycle enable fa-lg"></i>
                 </a>
             </ng-template>
@@ -28,5 +28,9 @@
         </div>
     </div>
 </div>
+
+<ngx-loading [show]="loading"
+    [config]="{ primaryColour: '#003792', secondaryColour: '#003792', tertiaryColour: '#003792'}"
+></ngx-loading>
 
 <new-item [click]="newList">Adicionar Lista</new-item>

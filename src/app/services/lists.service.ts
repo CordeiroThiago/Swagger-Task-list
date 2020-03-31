@@ -12,8 +12,8 @@ export class ListsService {
 
   constructor(private http: HttpClient) { }
 
-  getLists(showDisabled = false): Observable<any> {
-    const url =`${this.baseUrl}/lists${showDisabled ? "?active=false" : ""}`;
+  getLists(): Observable<any> {
+    const url =`${this.baseUrl}/lists`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -38,23 +38,34 @@ export class ListsService {
     return this.http.post(url, requestList, httpOptions);
   }
 
-  updateList(list: List): void {
-    console.log("List alterada");
+  updateList(list: List): Observable<any> {
+    const url = `${this.baseUrl}/lists/${list.id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
+      })
+    };
+    const requestList = {
+      name: list.name,
+      description: list.description
+    }
+
+    return this.http.put(url, requestList, httpOptions);
   }
 
-  disableList(listId: string): Observable<any> {
-    const url = `${this.baseUrl}/lists/${listId}`;
+  archiveList(listId: string): Observable<any> {
+    const url = `${this.baseUrl}/lists/${listId}/archive`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem("token")}`
       })
     };
 
-    return this.http.delete(url, httpOptions);
+    return this.http.post(url, {}, httpOptions);
   }
 
-  enableList(listId: string): Observable<any> {
-    const url = `${this.baseUrl}/lists/${listId}/activate`;
+  unarchiveList(listId: string): Observable<any> {
+    const url = `${this.baseUrl}/lists/${listId}/unarchive`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem("token")}`

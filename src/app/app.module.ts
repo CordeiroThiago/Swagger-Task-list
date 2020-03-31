@@ -12,6 +12,7 @@ import { TaskModalComponent } from './task-modal/task-modal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListModalComponent } from './list-modal/list-modal.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ListModalComponent } from './list-modal/list-modal.component';
     AppRoutingModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [],
   bootstrap: [AppComponent]
