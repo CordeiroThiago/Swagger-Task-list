@@ -29,6 +29,10 @@
     </div>
 </div>
 
+<button *ngIf="hasNext" class="btn btn-primary" (click)="loadMore()" style="width: 100%;">
+    Carregar Mais
+</button>
+
 <ngx-loading [show]="loading"
     [config]="{ primaryColour: '#003792', secondaryColour: '#003792', tertiaryColour: '#003792'}"
 ></ngx-loading>

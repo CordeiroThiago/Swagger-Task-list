@@ -21,12 +21,15 @@ export class TasksComponent implements OnInit, OnDestroy {
   selectedTask: Task;
   loading = false;
   statusList: Status[] = [];
+  page = 0;
+  hasNext = false;
 
   constructor(private route: ActivatedRoute,
     private _tasksService: TasksService,
     private _statusService: StatusService,
     private modalService: NgbModal) {
     this.getTasks = this.getTasks.bind(this);
+    this.loadMore = this.loadMore.bind(this);
     this.getStatusList = this.getStatusList.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.createTask = this.createTask.bind(this);
@@ -43,11 +46,17 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.getTasks();
   }
 
-  getTasks(active = true, page = 1) {
+  getTasks(active = true) {
     this.loading = true;
     this.tasks = [];
+    this.page = 0;
 
-    this._tasksService.getTasks(this.listId).subscribe(
+    this.loadMore();
+  }
+  
+  loadMore() {
+    this.page ++;
+    this._tasksService.getTasks(this.listId, this.page).subscribe(
       res => {
         res.items.forEach(task => {
           this.tasks.push(
@@ -80,6 +89,7 @@ export class TasksComponent implements OnInit, OnDestroy {
           );
         });
         this.loading = false;
+        this.hasNext = res.hasNext;
         this.getStatusList()
       },
       err => {

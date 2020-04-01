@@ -13,9 +13,12 @@ export class ListsComponent implements OnInit {
   title="Minhas listas";
   lists: List[] = [];
   loading = false;
+  page = 0;
+  hasNext = false;
 
   constructor(private _listsService: ListsService, private modalService: NgbModal) {
     this.getLists = this.getLists.bind(this);
+    this.loadMore = this.loadMore.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
     this.archiveList = this.archiveList.bind(this);
     this.unarchiveList = this.unarchiveList.bind(this);
@@ -30,8 +33,14 @@ export class ListsComponent implements OnInit {
   getLists() {
     this.loading = true;
     this.lists = [];
+    this.page = 0;
 
-    this._listsService.getLists().subscribe(
+    this.loadMore();
+  }
+
+  loadMore() {
+    this.page ++;
+    this._listsService.getLists(this.page).subscribe(
       res => {
         res.items.forEach(list => {
           this.lists.push(
@@ -50,6 +59,7 @@ export class ListsComponent implements OnInit {
           );
         });
         this.loading = false;
+        this.hasNext = res.hasNext;
       },
       err => {
         console.log(err)

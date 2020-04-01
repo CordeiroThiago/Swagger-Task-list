@@ -12,8 +12,8 @@ export class ListsService {
 
   constructor(private http: HttpClient) { }
 
-  getLists(): Observable<any> {
-    const url =`${this.baseUrl}/lists`;
+  getLists(page): Observable<any> {
+    const url =`${this.baseUrl}/lists?page=${page}&pageSize=100`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem("token")}`

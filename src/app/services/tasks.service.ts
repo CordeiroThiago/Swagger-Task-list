@@ -12,8 +12,8 @@ export class TasksService {
 
   constructor(private http: HttpClient) { }
 
-  getTasks(listID: string): Observable<any> {
-    const url = `${this.baseUrl}/lists/${listID}/tasks?expand=status`;
+  getTasks(listID: string, page: number): Observable<any> {
+    const url = `${this.baseUrl}/lists/${listID}/tasks?expand=status&page=${page}&pageSize=100`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem("token")}`
