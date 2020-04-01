@@ -38,8 +38,35 @@ export class TasksService {
     return this.http.post(url, requestTask, httpOptions);
   }
 
-  closeTask(task: Task): Observable<any> {
-    const url = `${this.baseUrl}/lists/${task.listId}/tasks/${task.id}/close`;
+  updateTask(task: Task): Observable<any> {
+    const url = `${this.baseUrl}/lists/${task.listId}/tasks/${task.id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
+      })
+    };
+    const requestTask = {
+      name: task.name,
+      description: task.description,
+      statusId: task.status.id
+    }
+
+    return this.http.put(url, requestTask, httpOptions);
+  }
+
+  deactivateTask(task: Task): Observable<any> {
+    const url = `${this.baseUrl}/lists/${task.listId}/tasks/${task.id}`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
+      })
+    };
+
+    return this.http.delete(url, httpOptions);
+  }
+
+  activateTask(task: Task): Observable<any> {
+    const url = `${this.baseUrl}/lists/${task.listId}/tasks/${task.id}/activate`;
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -47,24 +74,5 @@ export class TasksService {
     };
 
     return this.http.post(url, {}, httpOptions);
-  }
-
-  openTask(task: Task): Observable<any> {
-    const url = `${this.baseUrl}/lists/${task.listId}/tasks/${task.id}/open`;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem("token")}`
-      })
-    };
-
-    return this.http.post(url, {}, httpOptions);
-  }
-
-  updateTask(task: Task): void {
-    console.log("Task alterada");
-  }
-
-  deleteTask(taskId: string): void {
-    console.log(`Task ${taskId} deletada`);
   }
 }

@@ -29,9 +29,10 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.getTasks = this.getTasks.bind(this);
     this.getStatusList = this.getStatusList.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
     this.createTask = this.createTask.bind(this);
     this.newTask = this.newTask.bind(this);
+    this.deactivateTask = this.deactivateTask.bind(this);
+    this.activateTask = this.activateTask.bind(this);
   }
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.getTasks();
   }
 
-  getTasks() {
+  getTasks(active = true, page = 1) {
     this.loading = true;
     this.tasks = [];
 
@@ -134,6 +135,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   openDetails(task: Task): void {
     const taskModal = this.modalService.open(TaskModalComponent).componentInstance;
     taskModal.task = task;
+    taskModal.statusList = this.statusList;
     taskModal.save = this.saveChanges;
   }
 
@@ -180,14 +182,41 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   saveChanges(task: Task): void {
-    this._tasksService.updateTask(task);
+    this._tasksService.updateTask(task).subscribe(
+      res => {
+        this.getTasks();
+      },
+      err => {
+        console.log(err);
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
+      }
+    )
   }
 
-  deleteTask(taskId: string): void {
-    this._tasksService.deleteTask(taskId);
+  deactivateTask(task: Task): void {
+    this._tasksService.deactivateTask(task).subscribe(
+      res => {
+        this.getTasks();
+      },
+      err => {
+        console.log(err);
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
+      }
+    )
   }
 
-  activate(task: Task): void {
-
+  activateTask(task: Task): void {
+    this._tasksService.activateTask(task).subscribe(
+      res => {
+        this.getTasks();
+      },
+      err => {
+        console.log(err);
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
+      }
+    )
   }
 }

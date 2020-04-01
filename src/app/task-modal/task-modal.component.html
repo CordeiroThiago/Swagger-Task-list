@@ -34,6 +34,18 @@
                 [ngModel]="task.description"
             >
         </div>
+
+        <div *ngIf="statusList.length" class="form-group">
+            <label for="statusSelect">Status da tarefa</label>
+            <select class="form-control" id="status" name="status" [ngModel]="task.status" [compareWith]="statusCompare">
+                <option *ngFor="let status of statusList"
+                    [ngValue]="status"
+                    [selected]="status.id == task.status.id"
+                >
+                    {{status.name}}
+                </option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()">Cancelar</button>

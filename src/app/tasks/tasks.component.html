@@ -5,17 +5,25 @@
         *ngFor="let task of tasks"
     >
         <div class="item-header">
-            <a (click)="openDetails(task)" [style.color]="task.status.color">
-                {{task.status.name}}
-            </a>
-
             <a class="link" (click)="openDetails(task)">
                 {{task.name}}
             </a>
 
-            <a class="clicable" (click)="deleteTask(task.id)">
-                <i class="fas fa-trash fa-lg"></i>
+            <a (click)="openDetails(task)" [style.color]="task.status.color">
+                {{task.status.name}}
             </a>
+
+            <ng-template [ngIf]="task.active" [ngIfElse]="deactivated">
+                <a class="clicable" (click)="deactivateTask(task)">
+                    <i class="fas fa-minus-circle disable fa-lg"></i>
+                </a>
+            </ng-template>
+            
+            <ng-template #deactivated>
+                <a class="clicable" (click)="activateTask(task)">
+                    <i class="fas fa-recycle enable fa-lg"></i>
+                </a>
+            </ng-template>
         </div>
     </div>
 </div>
