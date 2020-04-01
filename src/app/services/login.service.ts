@@ -11,11 +11,11 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  login(): Observable<any> {
-    const url = `https://api-fluig.staging.totvs.app/accounts/oauth/token?grant_type=password&response_type=token&client_id=demo&username=${auth.username}&password=${auth.password}`;
+  login(username: string, password: string): Observable<any> {
+    const url = `https://api-fluig.staging.totvs.app/accounts/oauth/token?grant_type=password&response_type=token&client_id=demo&username=${username}&password=${password}`;
     const httpOptions = {
       headers: new HttpHeaders({
-        'Authorization': auth.authorization
+        'Authorization': `Basic ${auth.authorization}`
       })
     };
     

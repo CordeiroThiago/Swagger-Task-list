@@ -1,1 +1,32 @@
-<p>home works!</p>
+<h1 class="title">Login</h1>
+<form #loginForm="ngForm" (ngSubmit)="login()">
+    <div class="form-group">
+        <label for="username">Usuário</label>
+        <input type="text" class="form-control" name="username" #user="ngModel" [(ngModel)]="username" id="username" required>
+
+        <div *ngIf="user.invalid && user.dirty"
+            class="alert alert-danger feedback"
+        >
+            <div *ngIf="user.errors.required">
+                Por favor informe um nome para a lista
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" name="password" #pass="ngModel" [(ngModel)]="password" id="password" required>
+
+        <div *ngIf="pass.invalid && pass.dirty"
+            class="alert alert-danger feedback"
+        >
+            <div *ngIf="pass.errors.required">
+                Por favor informe um nome para a lista
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Fazer login</button>
+</form>
+
+<ngx-loading [show]="loading"
+    [config]="{ primaryColour: '#003792', secondaryColour: '#003792', tertiaryColour: '#003792'}"
+></ngx-loading>

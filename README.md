@@ -1,5 +1,13 @@
 # TaskList
 
+## Cofiguração para Login
+Para fazer login é necessário criar um arquivo de configuração auth.json na pasta src/assets com o seguinte formato:
+```javascript
+{
+    "authorization": "<autorização basic>"
+}
+```
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
 
 ## Development server
