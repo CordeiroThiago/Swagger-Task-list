@@ -5,13 +5,8 @@
         *ngFor="let task of tasks"
     >
         <div class="item-header">
-            <a [ngSwitch]="task.status" (click)="toggleFinished(task)">
-                <i *ngSwitchCase="'finished'"
-                    class="fas fa-check-square fa-lg checked"
-                ></i>
-                <i *ngSwitchDefault
-                    class="far fa-square fa-lg"
-                ></i>
+            <a (click)="openDetails(task)" [style.color]="task.status.color">
+                {{task.status.name}}
             </a>
 
             <a class="link" (click)="openDetails(task)">
@@ -24,5 +19,9 @@
         </div>
     </div>
 </div>
+
+<ngx-loading [show]="loading"
+    [config]="{ primaryColour: '#003792', secondaryColour: '#003792', tertiaryColour: '#003792'}"
+></ngx-loading>
 
 <new-item [click]="newTask">Adicionar Tarefa</new-item>

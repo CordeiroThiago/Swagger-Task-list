@@ -49,11 +49,12 @@ export class ListsComponent implements OnInit {
             )
           );
         });
-
         this.loading = false;
       },
       err => {
         console.log(err)
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
       }
     )
   }
@@ -70,6 +71,7 @@ export class ListsComponent implements OnInit {
   }
 
   createList(list: List): void {
+    this.loading = true;
     this._listsService.createList(list).subscribe(
       list => {
         this.lists.push(
@@ -86,9 +88,12 @@ export class ListsComponent implements OnInit {
             list.tenantId
           )
         );
+        this.loading = false;
       },
       err => {
         console.log(err)
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
       }
     )
   }
@@ -101,6 +106,8 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
       }
     )
   }
@@ -113,6 +120,8 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
       }
     )
   }
@@ -125,6 +134,8 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
       }
     )
   }

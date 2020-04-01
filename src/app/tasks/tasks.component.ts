@@ -1,3 +1,4 @@
+import { StatusService } from './../services/status.service';
 import { TaskModalComponent } from './../task-modal/task-modal.component';
 import { TasksService } from '../services/tasks.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -5,6 +6,7 @@ import { ActivatedRoute } from '@angular/router'
 import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Task } from '../classes/task';
+import { Status } from '../classes/status';
 
 @Component({
   selector: 'app-tasks',
@@ -14,34 +16,114 @@ import { Task } from '../classes/task';
 export class TasksComponent implements OnInit, OnDestroy {
   title = "Tarefas"
   private routeSub: Subscription;
-  listId: number;
+  listId: string;
   tasks: Task[] = [];
   selectedTask: Task;
+  loading = false;
+  statusList: Status[] = [];
 
   constructor(private route: ActivatedRoute,
     private _tasksService: TasksService,
+    private _statusService: StatusService,
     private modalService: NgbModal) {
-      this.saveChanges = this.saveChanges.bind(this);
-      this.deleteTask = this.deleteTask.bind(this);
-      this.createTask = this.createTask.bind(this);
-      this.newTask = this.newTask.bind(this);
-    }
+    this.getTasks = this.getTasks.bind(this);
+    this.getStatusList = this.getStatusList.bind(this);
+    this.saveChanges = this.saveChanges.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+    this.createTask = this.createTask.bind(this);
+    this.newTask = this.newTask.bind(this);
+  }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.listId = params.listId
     })
 
-    this.tasks = this._tasksService.getTasks(this.listId);
+    this.getTasks();
+  }
+
+  getTasks() {
+    this.loading = true;
+    this.tasks = [];
+
+    this._tasksService.getTasks(this.listId).subscribe(
+      res => {
+        res.items.forEach(task => {
+          this.tasks.push(
+            new Task(
+              task.id,
+              task.name,
+              task.description,
+              new Status(
+                task.status.id,
+                task.status.name,
+                task.status.statusType,
+                task.status.color,
+                task.status.active,
+                task.status.listId,
+                task.status.createDate,
+                task.status.updateDate,
+                task.status.enableTaskCreation,
+                task.status.sortValue,
+                task.status.authorId,
+                task.status.tenantId
+              ),
+              task.active,
+              task.listId,
+              task.createDate,
+              task.updateDate,
+              task.sortValue,
+              task.authorId,
+              task.tenantId
+            )
+          );
+        });
+        this.loading = false;
+        this.getStatusList()
+      },
+      err => {
+        console.log(err)
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
+      }
+    )
+  }
+
+  getStatusList(){
+    this.statusList = [];
+
+    this._statusService.getStatus(this.listId).subscribe(
+      res => {
+        res.items.forEach(status => {
+          this.statusList.push(
+            new Status(
+              status.id,
+              status.name,
+              status.statusType,
+              status.color,
+              status.active,
+              status.listId,
+              status.createDate,
+              status.updateDate,
+              status.enableTaskCreation,
+              status.sortValue,
+              status.authorId,
+              status.tenantId
+            )
+          );
+        });
+        console.log(this.statusList)
+      },
+      err => {
+        console.log(err)
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
+      }
+    )
   }
 
   ngOnDestroy(): void {
     this.routeSub.unsubscribe()
-  }
-
-  toggleFinished(task: Task): void {
-    task.status = (task.status == "finished") ? "open" : "finished";
-    this._tasksService.updateTask(task);
   }
 
   newTask(): void {
@@ -56,8 +138,45 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   createTask(task: Task): void {
-    this._tasksService.createTask(task);
-    this.tasks.push(task)
+    this.loading = true;
+    this._tasksService.createTask(this.listId, task).subscribe(
+      task => {
+        this.tasks.push(
+          new Task(
+            task.id,
+            task.name,
+            task.description,
+            new Status(
+              task.status.id,
+              task.status.name,
+              task.status.statusType,
+              task.status.color,
+              task.status.active,
+              task.status.listId,
+              task.status.createDate,
+              task.status.updateDate,
+              task.status.enableTaskCreation,
+              task.status.sortValue,
+              task.status.authorId,
+              task.status.tenantId
+            ),
+            task.active,
+            task.listId,
+            task.createDate,
+            task.updateDate,
+            task.sortValue,
+            task.authorId,
+            task.tenantId
+          )
+        );
+        this.loading = false;
+      },
+      err => {
+        console.log(err)
+        alert("não foi possivel concluir a ação")
+        this.loading = false;
+      }
+    )
   }
 
   saveChanges(task: Task): void {
@@ -66,5 +185,9 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   deleteTask(taskId: string): void {
     this._tasksService.deleteTask(taskId);
+  }
+
+  activate(task: Task): void {
+
   }
 }

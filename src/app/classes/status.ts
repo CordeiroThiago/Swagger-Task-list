@@ -1,14 +1,13 @@
-import { Status } from './status';
-
-export class Task {
+export class Status {
     constructor(private _id: string = "",
         private _name: string = "",
-        private _description: string = "",
-        private _status: Status = new Status(),
+        private _statusType: string = "",
+        private _color: string = "",
         private _active: boolean = true,
         private _listId: string = "",
         private _createDate: Date = new Date(),
         private _updateDate: Date = new Date(),
+        private _enableTaskCreation: boolean = false,
         private _sortValue: number = 0,
         private _authorId: string = "",
         private _tenantId: string = "") {}
@@ -21,12 +20,12 @@ export class Task {
         return this._name;
     }
 
-    get description() {
-        return this._description;
+    get statusType() {
+        return this._statusType;
     }
 
-    get status() {
-        return this._status
+    get color() {
+        return this._color;
     }
 
     get active() {
@@ -45,6 +44,10 @@ export class Task {
         return this._updateDate;
     }
 
+    get enableTaskCreation() {
+        return this._enableTaskCreation;
+    }
+
     get sortValue() {
         return this._sortValue;
     }
@@ -56,7 +59,7 @@ export class Task {
     get tenantId() {
         return this._tenantId;
     }
-
+    
     set id(id: string) {
         this._id = id;
     }
@@ -65,12 +68,12 @@ export class Task {
         this._name = name;
     }
 
-    set description(description: string) {
-        this._description = description;
+    set statusType(statusType: string) {
+        this._statusType = statusType;
     }
 
-    set status(status: Status) {
-        this._status = status;
+    set color(color: string) {
+        this._color = color;
     }
 
     set active(active: boolean) {
@@ -87,6 +90,10 @@ export class Task {
 
     set updateDate(updateDate: Date) {
         this._updateDate = updateDate;
+    }
+
+    set enableTaskCreation(enableTaskCreation: boolean) {
+        this._enableTaskCreation = enableTaskCreation;
     }
 
     set sortValue(sortValue: number) {
