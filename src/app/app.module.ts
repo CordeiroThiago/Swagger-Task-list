@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ListModalComponent } from './list-modal/list-modal.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { NotifierModule } from "angular-notifier";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NgxLoadingModule } from 'ngx-loading';
     NgbModule,
     HttpClientModule,
     FormsModule,
+    NotifierModule,
     NgxLoadingModule.forRoot({})
   ],
   providers: [],

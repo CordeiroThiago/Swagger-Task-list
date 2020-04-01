@@ -1,7 +1,7 @@
 import { LoginService } from './../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NotifierService } from "angular-notifier";
 
 @Component({
   selector: 'app-home',
@@ -14,6 +14,7 @@ export class HomeComponent {
   loading = false;
 
   constructor(private _auth: LoginService,
+    private readonly notifier: NotifierService,
     private _router: Router) { }
 
   login(): void {
@@ -32,9 +33,9 @@ export class HomeComponent {
         this.loading = false;
 
         if (err.status == 401) {
-          alert("Usuário ou senha incorretos.");
+          this.notifier.notify("error", "Usuário ou senha incorretos.");
         } else {
-          alert("não foi possivel concluir a ação.");
+          this.notifier.notify("error", "Erro ao fazer login.");
         }
       }
     )

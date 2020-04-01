@@ -1,3 +1,4 @@
+import { NotifierService } from 'angular-notifier';
 import { StatusService } from './../services/status.service';
 import { TaskModalComponent } from './../task-modal/task-modal.component';
 import { TasksService } from '../services/tasks.service';
@@ -25,6 +26,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   hasNext = false;
 
   constructor(private route: ActivatedRoute,
+    private readonly notifier: NotifierService,
     private _tasksService: TasksService,
     private _statusService: StatusService,
     private modalService: NgbModal) {
@@ -94,7 +96,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err)
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Não foi possível carregar os registros");
         this.loading = false;
       }
     )
@@ -127,7 +129,6 @@ export class TasksComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err)
-        alert("não foi possivel concluir a ação")
         this.loading = false;
       }
     )
@@ -185,7 +186,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err)
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Erro ao criar nova tarefa");
         this.loading = false;
       }
     )
@@ -198,7 +199,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err);
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Erro ao salvar alterações");
         this.loading = false;
       }
     )
@@ -211,7 +212,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err);
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Não foi possível desativar tarefa");
         this.loading = false;
       }
     )
@@ -224,7 +225,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       },
       err => {
         console.log(err);
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Não foi possível carregar ativar tarefa");
         this.loading = false;
       }
     )

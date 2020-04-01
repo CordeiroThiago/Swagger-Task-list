@@ -1,3 +1,4 @@
+import { NotifierService } from 'angular-notifier';
 import { ListModalComponent } from './../list-modal/list-modal.component';
 import { ListsService } from '../services/lists.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,9 @@ export class ListsComponent implements OnInit {
   page = 0;
   hasNext = false;
 
-  constructor(private _listsService: ListsService, private modalService: NgbModal) {
+  constructor(private _listsService: ListsService,
+    private readonly notifier: NotifierService,
+    private modalService: NgbModal) {
     this.getLists = this.getLists.bind(this);
     this.loadMore = this.loadMore.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
@@ -63,7 +66,7 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err)
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Não foi possível carregar os registros");
         this.loading = false;
       }
     )
@@ -102,7 +105,7 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err)
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Erro ao criar nova lista");
         this.loading = false;
       }
     )
@@ -116,7 +119,7 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err);
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Erro ao salvar alterações");
         this.loading = false;
       }
     )
@@ -130,7 +133,7 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err);
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Não foi possível arquivar lista");
         this.loading = false;
       }
     )
@@ -144,7 +147,7 @@ export class ListsComponent implements OnInit {
       },
       err => {
         console.log(err);
-        alert("não foi possivel concluir a ação")
+        this.notifier.notify("error", "Não foi possível recuperar lista");
         this.loading = false;
       }
     )
